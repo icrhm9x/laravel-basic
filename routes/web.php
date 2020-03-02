@@ -18,4 +18,7 @@ Route::get('user', 'UserController@getUser');
 Route::get('user/add', 'AddUserController@getAddUser');
 Route::post('user/add', 'AddUserController@postAddUser');
 
-Route::get('user/edit', 'EditUserController@getEditUser');
+Route::get('user/edit/{idUser}', 'EditUserController@getEditUser');
+Route::post('user/edit/{idUser}', 'editUserController@posteditUser');
+
+Route::get('user/del/{idUser}', 'UserController@delUser');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\AddUserRequest;
+use App\Models\Users;
 
 class AddUserController extends Controller
 {
@@ -11,25 +13,15 @@ class AddUserController extends Controller
         return view('add_user');
     }
 
-    function postAddUser(request $r)
+    function postAddUser(AddUserRequest $r)
     {
         // dd($r->all());
-        $rules = [
-            'full' => 'required|min:3',
-            'phone' => 'bail|required|numeric|between:5,10',
-            'address' => 'required',
-            'id_number' => 'required'
-        ];
-        $messages = [
-            'full.required' => 'Không được để trống họ và tên',
-            'full.min' => 'Họ và tên không được nhỏ hơn 3 ký tự',
-            'phone.required' => 'Không được để trống số điện thoại',
-            'phone.numeric' => 'Số điện thoại phải là số',
-            'phone.between' => 'Số điện thoại phải trong khoảng 5 đến 10 kí tự',
-            'address.required' => 'Không được để trống địa chỉ',
-            'id_number.required' => 'Không được để trống số CMT'
-
-        ];
-        $r->validate($rules, $messages);
+        $user = new Users();
+        $user->full = $r->full;
+        $user->phone = $r->phone;
+        $user->address = $r->address;
+        $user->id_number = $r->id_number;
+        $user->save();
+        return redirect('/user');
     }
 }

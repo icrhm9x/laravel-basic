@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddUserRequest extends FormRequest
+class editUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class AddUserRequest extends FormRequest
     {
         return [
             "full" => "required|min:4",
-            "phone" => "required|digits_between:5,15|unique:users,phone",
+            "phone" => "required|digits_between:5,15|unique:users,phone," . $this->idUser,
             "address" => "required",
             "id_number" => "required|digits_between:6,12"
         ];

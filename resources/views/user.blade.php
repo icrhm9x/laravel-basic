@@ -6,7 +6,7 @@
             <div class="row sameheight-container">
                 <div class="col-xl-12">
                     <div class="card sameheight-item items" data-exclude="xs,sm,lg">
-                        <form action="" method="post">
+                        <form action="" method="get">
                             <div class="card-header bordered">
                                 <div class="header-block">
                                     <h3 class="title"> Danh sách thành viên </h3>
@@ -54,71 +54,31 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="item">
-                                <div class="item-row">
-                                    <div class="item-col">
-                                        <a href="edit_user.html">
-                                            Nguyễn Thế phúc
-                                        </a>
+                            @foreach ($users as $row)
+                                <li class="item">
+                                    <div class="item-row">
+                                        <div class="item-col">
+                                            <a href="/user/edit/{{$row->id}}">
+                                                {{ $row->full }}
+                                            </a>
+                                        </div>
+                                        <div class="item-col">
+                                            {{ $row->phone }}
+                                        </div>
+                                        <div class="item-col">
+                                            <span title="Dũng Tiến-Thường tín-Hà Nội">
+                                                {{ $row->address }}
+                                            </span>
+                                        </div>
+                                        <div class="item-col">
+                                            {{ $row->id_number }}
+                                        </div>
+                                        <div class="item-col ">
+                                            <a onclick="return delUser('{{ $row->full }}')" href="/user/del/{{ $row->id }}" class="btn btn-danger-outline">Xoá</a>
+                                        </div>
                                     </div>
-                                    <div class="item-col">
-                                        0356333333
-                                    </div>
-                                    <div class="item-col">
-                                        <span title="Dũng Tiến-Thường tín-Hà Nội">Dũng Tiến-Thường tín...</span>
-                                    </div>
-                                    <div class="item-col">
-                                        017478331
-                                    </div>
-                                    <div class="item-col ">
-                                        <a href="#" class="btn btn-danger-outline">Xoá</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="item">
-                                <div class="item-row">
-                                    <div class="item-col">
-                                        <a  href="edit_user.html">
-                                            Nguyễn đình trung
-                                        </a>
-                                    </div>
-                                    <div class="item-col">
-                                        0321555422
-                                    </div>
-                                    <div class="item-col">
-                                        <span title="Quán Gánh-Thường tín-Hà Nội">Quán Gánh-Thường tín...</span>
-                                    </div>
-                                    <div class="item-col">
-                                        017653224
-                                    </div>
-                                    <div class="item-col ">
-                                            <a href="#" class="btn btn-danger-outline">Xoá</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="item">
-                                <div class="item-row">
-                                    <div class="item-col">
-                                        <a  href="edit_user.html">
-                                            Nguyễn Văn Ninh
-                                        </a>
-                                    </div>
-                                    <div class="item-col">
-                                        0152354421
-                                    </div>
-                                    <div class="item-col">
-                                        <span title="Dũng Tiến-Thường tín-Hà Nội">Từ sơn-Bắc ninh - Hà
-                                            N...</span>
-                                    </div>
-                                    <div class="item-col">
-                                        017658847
-                                    </div>
-                                    <div class="item-col ">
-                                        <a href="#" class="btn btn-danger-outline">Xoá</a>
-                                    </div>
-                                </div>
-                            </li>
-
+                                </li>
+                            @endforeach
                         </ul>
 
                     </div>
@@ -130,11 +90,7 @@
             <div align='right'>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#"><</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">></a></li>
+                        {{ $users->appends(['search'=>request()->search])->links() }}
                     </ul>
                 </nav>
             </div>
@@ -146,4 +102,9 @@
 @section('script')
 @parent
 {{-- <script> code js cho từng trang ở đây</script> --}}
+<script>
+    function delUser(name){
+        return confirm('ban co muon xoa nguoi dung '+name+' nay');
+    }
+</script>
 @endsection
